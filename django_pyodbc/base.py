@@ -484,6 +484,7 @@ class CursorWrapper(object):
         sql = self.format_sql(sql, len(params))
         params = self.format_params(params)
         self.last_params = params
+        print(sql)
         try:
             return self.cursor.execute(sql, params)
         except IntegrityError:
