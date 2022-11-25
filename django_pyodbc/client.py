@@ -54,7 +54,7 @@ class DatabaseClient(BaseDatabaseClient):
     else:
         executable_name = 'isql'
 
-    def runshell(self):
+    def runshell(self, parameters=[]):
         settings_dict = self.connection.settings_dict
         user = settings_dict['OPTIONS'].get('user', settings_dict['USER'])
         password = settings_dict['OPTIONS'].get('passwd', settings_dict['PASSWORD'])

@@ -81,7 +81,8 @@ try:
 except ImportError:
     # import location prior to Django 1.8
     from django.db.backends import BaseDatabaseWrapper, BaseDatabaseFeatures, BaseDatabaseValidation
-
+_DJANGO_VERSION = 20
+"""
 if DjangoVersion[:2] == (2, 0):
     _DJANGO_VERSION = 20
 else:
@@ -92,7 +93,7 @@ else:
             "version of Django is supported by django-pyodbc")
     else:
         raise ImproperlyConfigured("Django %d.%d is not supported." % DjangoVersion[:2])
-
+"""
 
 DatabaseError = Database.Error
 IntegrityError = Database.IntegrityError
