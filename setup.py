@@ -71,5 +71,6 @@ setup(
     ],
     install_requires=[
         'pyodbc>=3.0.6,<4.1',
+        'six',
     ]
 )
