@@ -358,19 +358,19 @@ class DatabaseWrapper(BaseDatabaseWrapper):
             # Django convention for the 'week_day' Django lookup) if the user
             # hasn't told us otherwise
             """"""
-            if not self.ops.is_db2 and not self.ops.is_openedge:
+            if False:#not self.ops.is_db2 and not self.ops.is_openedge:
                 # IBM's DB2 doesn't support this syntax and a suitable
                 # equivalent could not be found.
                 #cursor.execute("SET DATEFORMAT ymd; SET DATEFIRST %s" % self.datefirst)
                 pass
-            if self.ops.sql_server_ver < 2005:
+            if True: #self.ops.sql_server_ver < 2005:
                 self.creation.data_types['TextField'] = 'ntext'
                 self.data_types['TextField'] = 'ntext'
                 self.features.can_return_id_from_insert = False
 
             ms_sqlncli = re.compile('^((LIB)?SQLN?CLI|LIBMSODBCSQL)')
-            self.drv_name = self.connection.getinfo(Database.SQL_DRIVER_NAME).upper()
-
+            #self.drv_name = self.connection.getinfo(Database.SQL_DRIVER_NAME).upper()
+            """
             # http://msdn.microsoft.com/en-us/library/ms131686.aspx
             if self.ops.sql_server_ver >= 2005 and ms_sqlncli.match(self.drv_name) and self.MARS_Connection:
                 # How to to activate it: Add 'MARS_Connection': True
@@ -400,6 +400,8 @@ class DatabaseWrapper(BaseDatabaseWrapper):
             elif self.driver_supports_utf8 is None:
                 self.driver_supports_utf8 = (self.drv_name == 'SQLSRV32.DLL'
                                              or ms_sqlncli.match(self.drv_name))
+            """
+            self.driver_supports_utf8=True
 
         return CursorWrapper(cursor, self.driver_supports_utf8, self.encoding, self)
 
@@ -445,6 +447,10 @@ class CursorWrapper(object):
             pass
 
     def format_sql(self, sql, n_params=None):
+        print('-----------------------')
+        print(sql)
+        sql = sql.replace('[','').replace(']','').replace('TOP 21','').replace('R500.','')
+        print(n_params)
         # pyodbc uses '?' instead of '%s' as parameter placeholder.
         if n_params is not None:
             try:
